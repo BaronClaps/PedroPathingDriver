@@ -163,7 +163,7 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public void setPose(Pose setPose) {
-        odo.setPosition(new Pose2D(DistanceUnit.INCH, setPose.getX(), setPose.getY(), AngleUnit.RADIANS, setPose.getHeading()));
+        odo.setPosition(new Pose(setPose.getX(), setPose.getY(), setPose.getHeading()));
         pinpointPose = setPose;
         previousHeading = setPose.getHeading();
     }
@@ -176,7 +176,7 @@ public class PinpointLocalizer extends Localizer {
         deltaTimeNano = timer.getElapsedTime();
         timer.resetTimer();
         odo.update();
-        Pose currentPinpointPose = getPoseEstimate(odo.getPosition(), pinpointPose, deltaTimeNano);
+        Pose currentPinpointPose = getPoseEstimate(new Pose2D(DistanceUnit.INCH, odo.getPosition().getX(), odo.getPosition().getY(), AngleUnit.RADIANS, odo.getHeading()), pinpointPose, deltaTimeNano);
         totalHeading += MathFunctions.getSmallestAngleDifference(currentPinpointPose.getHeading(), previousHeading);
         previousHeading = currentPinpointPose.getHeading();
         Pose deltaPose = MathFunctions.subtractPoses(currentPinpointPose, pinpointPose);
