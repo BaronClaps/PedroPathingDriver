@@ -432,8 +432,8 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
      * @param pos a Pose describing the robot's new position.
      */
     public Pose setPosition(Pose pos){
-        writeByteArray(Register.X_POSITION,(floatToByteArray((float) MathFunctions.inToMM(pos.getX()), ByteOrder.LITTLE_ENDIAN)));
-        writeByteArray(Register.Y_POSITION,(floatToByteArray((float) MathFunctions.inToMM(pos.getY()),ByteOrder.LITTLE_ENDIAN)));
+        writeByteArray(Register.X_POSITION,(floatToByteArray((float) (pos.getX() * 25.4), ByteOrder.LITTLE_ENDIAN)));
+        writeByteArray(Register.Y_POSITION,(floatToByteArray((float) (pos.getY() * 25.4),ByteOrder.LITTLE_ENDIAN)));
         writeByteArray(Register.H_ORIENTATION,(floatToByteArray((float) pos.getHeading(),ByteOrder.LITTLE_ENDIAN)));
         return pos;
     }
